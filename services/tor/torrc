@@ -1,0 +1,8 @@
+SOCKSPort 0.0.0.0:9050
+Log notice stdout
+
+# If you want to limit exit nodes to a specific country, 
+# set the region in .env and then rewrite or manipulate torrc accordingly.
+
+# Example: forcing US exit nodes only:
+StrictNodes 1

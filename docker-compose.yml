@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+  tor-proxy:
+    build: ./services/tor
+    container_name: tor-proxy
+    ports:
+      - '9050:9050'  # Tor SOCKS proxy
+
+  backend:
+    build: ./backend
+    container_name: youtube-backend
+    depends_on:
+      - redis
+      - tor-proxy
+    volumes:
+      - ./:/app  # For dev, mount current dir
+    command: celery -A celery_app worker --loglevel=info --concurrency=4
+
+  # Optional: separate scheduler container if you want Celery beat:
+  # scheduler:
+  #   build: ./backend
+  #   container_name: youtube-scheduler
+  #   depends_on:
+  #     - backend
+  #   command: celery -A celery_app beat --loglevel=info
+
+  frontend:
+    build: ./frontend
+    container_name: youtube-frontend
+    depends_on:
+      - backend
+    ports:
+      - '8501:8501'
+
+volumes:
+  redis_data:

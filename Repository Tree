@@ -1,0 +1,25 @@
+my-youtube-bot/
+├── README.md
+├── docker-compose.yml
+├── .env.example
+├── backend/
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   ├── celery_app.py
+│   ├── db.py
+│   ├── models.py
+│   ├── utils.py
+│   ├── youtube_uploader.py
+│   ├── video_processor.py
+│   └── main.py
+├── frontend/
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── streamlit_app.py
+├── services/
+│   ├── redis/
+│   │   ├── redis.conf
+│   └── tor/
+│       ├── Dockerfile
+│       └── torrc
+└── ...
